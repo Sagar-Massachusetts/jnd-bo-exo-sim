@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+.venv/
+venv/
+.env
+
+# Data / results
+results/logs/*.log
+results/**/*.tmp
+*.h5
+*.pkl
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Colab
+.cache/
