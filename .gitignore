@@ -19,3 +19,15 @@ Thumbs.db
 
 # Colab
 .cache/
+
+# Sweep artifacts (regenerable, keep only the committed CSVs)
+results/run_quick/figures/*.png.tmp
+results/**/*.log
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Python bytecode (redundant but explicit)
+*.pyc
