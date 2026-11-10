@@ -1,0 +1,154 @@
+{
+  "unimodal": {
+    "all_equivalent": true,
+    "worst_p": 0.03952425705094137,
+    "params": [
+      {
+        "name": "rise_time",
+        "mean_diff": -0.0008332120617986771,
+        "ci_lo": -0.016704502318944235,
+        "ci_hi": 0.015038078195346881,
+        "bound": 0.03,
+        "equivalent": true
+      },
+      {
+        "name": "peak_timing",
+        "mean_diff": 0.0008623899493658826,
+        "ci_lo": -0.02627686093237304,
+        "ci_hi": 0.028001640831104804,
+        "bound": 0.03,
+        "equivalent": true
+      },
+      {
+        "name": "fall_time",
+        "mean_diff": 0.00031871912873077113,
+        "ci_lo": -0.007434700592580664,
+        "ci_hi": 0.008072138850042206,
+        "bound": 0.03,
+        "equivalent": true
+      },
+      {
+        "name": "peak_torque",
+        "mean_diff": 0.0009266510279558604,
+        "ci_lo": -0.03143035649240261,
+        "ci_hi": 0.03328365854831433,
+        "bound": 0.1,
+        "equivalent": true
+      }
+    ]
+  },
+  "multimodal": {
+    "all_equivalent": false,
+    "worst_p": 0.20952461553835158,
+    "params": [
+      {
+        "name": "rise_time",
+        "mean_diff": 0.0,
+        "ci_lo": -0.06290207572397384,
+        "ci_hi": 0.06290207572397384,
+        "bound": 0.03,
+        "equivalent": false
+      },
+      {
+        "name": "peak_timing",
+        "mean_diff": 0.0,
+        "ci_lo": -0.061664481735605514,
+        "ci_hi": 0.061664481735605514,
+        "bound": 0.03,
+        "equivalent": false
+      },
+      {
+        "name": "fall_time",
+        "mean_diff": 0.0,
+        "ci_lo": -0.031287653591344645,
+        "ci_hi": 0.031287653591344645,
+        "bound": 0.03,
+        "equivalent": false
+      },
+      {
+        "name": "peak_torque",
+        "mean_diff": 0.0,
+        "ci_lo": -0.16184684341062489,
+        "ci_hi": 0.16184684341062489,
+        "bound": 0.1,
+        "equivalent": false
+      }
+    ]
+  },
+  "asymmetric": {
+    "all_equivalent": false,
+    "worst_p": 0.06963975892748911,
+    "params": [
+      {
+        "name": "rise_time",
+        "mean_diff": 0.0,
+        "ci_lo": -0.024081632237558957,
+        "ci_hi": 0.024081632237558957,
+        "bound": 0.03,
+        "equivalent": true
+      },
+      {
+        "name": "peak_timing",
+        "mean_diff": 0.0,
+        "ci_lo": -0.03362895854612495,
+        "ci_hi": 0.03362895854612495,
+        "bound": 0.03,
+        "equivalent": false
+      },
+      {
+        "name": "fall_time",
+        "mean_diff": 0.0,
+        "ci_lo": -0.010863630461547038,
+        "ci_hi": 0.010863630461547038,
+        "bound": 0.03,
+        "equivalent": true
+      },
+      {
+        "name": "peak_torque",
+        "mean_diff": 0.0,
+        "ci_lo": -0.0847715650756603,
+        "ci_hi": 0.0847715650756603,
+        "bound": 0.1,
+        "equivalent": true
+      }
+    ]
+  },
+  "timing_sensitive": {
+    "all_equivalent": false,
+    "worst_p": 0.0989086100396084,
+    "params": [
+      {
+        "name": "rise_time",
+        "mean_diff": 0.0,
+        "ci_lo": -0.03742196248031172,
+        "ci_hi": 0.03742196248031172,
+        "bound": 0.03,
+        "equivalent": false
+      },
+      {
+        "name": "peak_timing",
+        "mean_diff": 0.0,
+        "ci_lo": -0.03890412974666258,
+        "ci_hi": 0.03890412974666258,
+        "bound": 0.03,
+        "equivalent": false
+      },
+      {
+        "name": "fall_time",
+        "mean_diff": 0.0,
+        "ci_lo": -0.016992181366264125,
+        "ci_hi": 0.016992181366264125,
+        "bound": 0.03,
+        "equivalent": true
+      },
+      {
+        "name": "peak_torque",
+        "mean_diff": 0.0,
+        "ci_lo": -0.12663591036939725,
+        "ci_hi": 0.12663591036939725,
+        "bound": 0.1,
+        "equivalent": false
+      }
+    ]
+  }
+}
