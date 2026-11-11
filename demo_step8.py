@@ -1,7 +1,7 @@
 """
-demo_step8.py
--------------
-Convenience wrapper: invokes the CLI runner with --quick so you can see the
+Md Mainuddin Sagar-
+-
+demo_step8.py convenience wrapper: invokes the CLI runner with -quick so we can see the
 summary table and figures in ~30s.
 """
 import subprocess
