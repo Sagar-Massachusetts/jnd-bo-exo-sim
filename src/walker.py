@@ -1,22 +1,18 @@
 """
-walker.py
----------
-Planar simulated walker producing a deterministic gait-phase signal.
-
+Md Mainuddin Sagar-
+-
+walker.py planar simulated walker producing a deterministic gait-phase signal.
 We deliberately keep the dynamical model simple and *deterministic* so that
 the human-in-the-loop optimizer in later steps is exercised by the optimizer,
 not by walking noise. The gait phase is the input to the exoskeleton torque
 policy.
 
 Conventions
------------
-* `gait_phase(t)` is in [0, 1).  0 = heel strike of the reference foot.
+* gait_phase(t) is in [0, 1).  0 = heel strike of the reference foot.
 * The stride period is a constructor parameter (default 1.0 s).
 * The phase wraps forward-only (never resets by going negative).
 """
-
 from __future__ import annotations
-
 
 class Walker:
     """Planar walker exposing `gait_phase()` and stepping time forward."""
