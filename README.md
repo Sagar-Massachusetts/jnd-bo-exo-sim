@@ -112,4 +112,4 @@ text
   url    = {https://github.com/Sagar-Massachusetts/jnd-bo-exo-sim}
 }
 License
-MIT, for academic and research use.
+Penn State, for academic and research use.
