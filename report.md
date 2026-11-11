@@ -4,7 +4,7 @@
 
 ---
 
-Abstract
+## Abstract
 
 We present a perception-aware Bayesian optimization (BO) framework for tuning a four-parameter ankle-exoskeleton torque profile (rise time, peak timing, fall time, peak torque). The central hypothesis is that a just-noticeable-difference (JND)-aware acquisition function can match the performance of standard Expected Improvement (EI) on perceptually symmetric reward surfaces while giving a small advantage on perceptually asymmetric surfaces where timing dominates the reward. We implement a full human-in-the-loop simulation pipeline: a gait-phase-driven ankle-torque model, a library of four synthetic reward surfaces with known optima, a simulated human oracle with four feedback modes (scalar, pairwise preference, JND-aware preference, ordinal rating), a Gaussian-process surrogate, and five acquisition strategies (random, grid, EI, Thompson sampling, JND-aware EI). Across 20-seed sweeps, EI and JND-EI reduce simple regret by 4–7× compared with random and grid baselines on three of four surfaces. TOST equivalence testing with JND-informed bounds shows that JND-EI's optimum is statistically equivalent to EI's on the unimodal surface (p = 0.040). On the asymmetric and timing-sensitive surfaces, equivalence was not declared (p = 0.070 and p = 0.099), consistent with the paper's hypothesis that perceptual asymmetry alters the optimum when timing is the dominant channel. The framework is fully reproducible in Python and MATLAB and designed to seed future hardware studies on real exoskeletons.
 
@@ -12,7 +12,7 @@ Keywords: Bayesian optimization, exoskeleton, human-in-the-loop, just-noticeable
 
 ---
 
-1. Introduction
+## 1. Introduction
 
 Human-in-the-loop (HIL) optimization has become the dominant paradigm for tuning the assistance profile of wearable exoskeletons. The human's subjective response — comfort, preference, or metabolic cost — is the objective the optimizer maximizes; the exoskeleton's torque parameters are the decision variables. The two most common algorithms used in this context are Bayesian optimization (BO) via Expected Improvement, and the covariance matrix adaptation evolution strategy (CMA-ES).
 
@@ -96,7 +96,7 @@ Full-sweep results (20 seeds, budget=30):
 | Grid | 0.804 | 0.420 | 0.837 | 0.921 |
 | EI | **0.110** | **0.198** | **0.294** | 0.539 |
 | TS | 0.310 | 0.240 | 0.436 | 0.728 |
-| JND-EI | **0.110** | **0.198** | 0.294 | **0.529** |
+| JND-EI | **0.110** | **0.198** | **0.294** | **0.529** |
 
 Simple regret (lower is better). EI and JND-EI reduce regret by 4–7× compared with Random/Grid on three of four surfaces. On the timing-sensitive surface, JND-EI achieves a small but consistent improvement over EI.
 
