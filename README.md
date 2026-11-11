@@ -1,6 +1,6 @@
 # jnd-bo-exo-sim
 
-Simulation testbed for **JND-informed Bayesian optimization of ankle-exoskeleton assistance profiles**. Final project for ME 556 (Advanced Robotics), Penn State, Fall 2026.
+Simulation testbed for **JND-informed Bayesian optimization of ankle-exoskeleton assistance profiles**. Final project for ME 556 (Robotics Concepts), Penn State, Fall 2026. (We are planning a conference paper based on this project.)
 
 ## Overview
 
