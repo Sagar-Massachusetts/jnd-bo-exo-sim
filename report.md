@@ -96,7 +96,7 @@ Full-sweep results (20 seeds, budget=30):
 | Grid | 0.804 | 0.420 | 0.837 | 0.921 |
 | EI | **0.110** | **0.198** | **0.294** | 0.539 |
 | TS | 0.310 | 0.240 | 0.436 | 0.728 |
-| JND-EI | **0.110** | **0.198** | **0.294** | **0.529** |
+| **JND-EI** | **0.110** | **0.198** | **0.294** | **0.529** |
 
 Simple regret (lower is better). EI and JND-EI reduce regret by 4–7× compared with Random/Grid on three of four surfaces. On the timing-sensitive surface, JND-EI achieves a small but consistent improvement over EI.
 
