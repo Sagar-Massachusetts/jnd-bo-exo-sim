@@ -1,19 +1,20 @@
+% Md Mainuddin Sagar
 % fig5_gp_surrogate.m
 % GP posterior mean and std on the (peak_timing, peak_torque) slice, with
 % N = 8 and N = 30 training points. Pure MATLAB — uses fitrgp.
 %
-% RUN: open in MATLAB 2026, Current Folder = repo root, press Run.
+% Running process: openning in MATLAB 2026 in my macbook, Current Folder = repo root, press Run.
 
 clear; clc; close all;
 
-%% ============================ STYLE BLOCK ================================
+%% STYLE BLOCK
 OUT_DIR  = fullfile('figures', 'output');
 OUT_NAME = 'fig5_gp_surrogate_matlab';
 N_GRID   = 60;
 N8       = 8;
 N30      = 30;
 SEED     = 7;
-% ========================================================================
+%
 
 if ~exist(OUT_DIR, 'dir'), mkdir(OUT_DIR); end
 rng(SEED);
@@ -105,7 +106,7 @@ exportgraphics(fig, fullfile(OUT_DIR, [OUT_NAME '.svg']), 'ContentType', 'vector
 exportgraphics(fig, fullfile(OUT_DIR, [OUT_NAME '.png']), 'Resolution', 300);
 fprintf('Saved %s.{pdf,svg,png}\n', OUT_NAME);
 
-%% ---- Helper -----------------------------------------------------------
+%% Helper 
 function v = gauss_bump(u, center, sigma)
     d2 = sum((u - center).^2);
     v = exp(-d2 / (2 * sigma^2));
