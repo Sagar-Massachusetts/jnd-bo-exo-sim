@@ -1,22 +1,22 @@
-# JND-Informed Bayesian Optimization of Ankle-Exoskeleton Assistance Profiles in a Simulated Robotic System
+Title: JND-Informed Bayesian Optimization of Ankle-Exoskeleton Assistance Profiles in a Simulated Robotic System
 
-**Md Mainuddin Sagar** · ME 556 Final Project · Penn State · November 2026
+Md Mainuddin Sagar · ME 556 Final Project · The Pennsylvania State University (Penn State), University Park · November 2026
+
+-
+
+Abstract
+
+We present a perception-aware Bayesian optimization (BO) framework for tuning a four-parameter ankle-exoskeleton torque profile (rise time, peak timing, fall time, peak torque). The central hypothesis is that a just-noticeable-difference (JND)-aware acquisition function can match the performance of standard Expected Improvement (EI) on perceptually symmetric reward surfaces while giving a small advantage on perceptually asymmetric surfaces where timing dominates the reward. We implement a full human-in-the-loop simulation pipeline: a gait-phase-driven ankle-torque model, a library of four synthetic reward surfaces with known optima, a simulated human oracle with four feedback modes (scalar, pairwise preference, JND-aware preference, ordinal rating), a Gaussian-process surrogate, and five acquisition strategies (random, grid, EI, Thompson sampling, JND-aware EI). Across 20-seed sweeps, EI and JND-EI reduce simple regret by 4–7× compared with random and grid baselines on three of four surfaces. TOST equivalence testing with JND-informed bounds shows that JND-EI's optimum is statistically equivalent to EI's on the unimodal surface (p = 0.040). On the asymmetric and timing-sensitive surfaces, equivalence was not declared (p = 0.070 and p = 0.099), consistent with the paper's hypothesis that perceptual asymmetry alters the optimum when timing is the dominant channel. The framework is fully reproducible in Python and MATLAB and designed to seed future hardware studies on real exoskeletons.
+
+Keywords: Bayesian optimization, exoskeleton, human-in-the-loop, just-noticeable difference, TOST equivalence testing.
 
 ---
 
-## Abstract
-
-We present a perception-aware Bayesian optimization (BO) framework for tuning a four-parameter ankle-exoskeleton torque profile (rise time, peak timing, fall time, peak torque). The central hypothesis is that a just-noticeable-difference (JND)-aware acquisition function can match the performance of standard Expected Improvement (EI) on perceptually symmetric reward surfaces while giving a small advantage on perceptually asymmetric surfaces where timing dominates the reward. We implement a full human-in-the-loop simulation pipeline: a gait-phase-driven ankle-torque model, a library of four synthetic reward surfaces with known optima, a simulated human oracle with four feedback modes (scalar, pairwise preference, JND-aware preference, ordinal rating), a Gaussian-process surrogate, and five acquisition strategies (random, grid, EI, Thompson sampling, JND-aware EI). Across 20-seed sweeps, EI and JND-EI reduce simple regret by 4–7× compared with random and grid baselines on three of four surfaces. TOST equivalence testing with JND-informed bounds shows that JND-EI's optimum is statistically equivalent to EI's on the unimodal surface (p = 0.040). On the asymmetric and timing-sensitive surfaces, equivalence was not declared (p = 0.070 and p = 0.099), consistent with the paper's hypothesis that perceptual asymmetry alters the optimum when timing is the dominant channel. The framework is fully reproducible in Python and designed to seed future hardware studies on real exoskeletons.
-
-**Keywords**: Bayesian optimization, exoskeleton, human-in-the-loop, just-noticeable difference, TOST equivalence testing.
-
----
-
-## 1. Introduction
+1. Introduction
 
 Human-in-the-loop (HIL) optimization has become the dominant paradigm for tuning the assistance profile of wearable exoskeletons. The human's subjective response — comfort, preference, or metabolic cost — is the objective the optimizer maximizes; the exoskeleton's torque parameters are the decision variables. The two most common algorithms used in this context are Bayesian optimization (BO) via Expected Improvement, and the covariance matrix adaptation evolution strategy (CMA-ES).
 
-A central unsolved question is *what reward function* the optimizer should target. Preference and comfort are cheap to elicit but subjective; metabolic cost is objective but requires lab-grade indirect calorimetry. In this project we focus on the *perceptual* dimension: the reward surface the human actually experiences is not smooth — it has perceptual asymmetries. The human's ability to distinguish two parameter settings depends on **where in the parameter space** the settings lie, governed by the just-noticeable difference (JND) of each parameter. A good optimizer must therefore **not waste queries** on trials whose predicted difference falls below the human's perceptual threshold.
+A central unsolved question is *what reward function* the optimizer should target. Preference and comfort are cheap to elicit but subjective; metabolic cost is objective but requires lab-grade indirect calorimetry. In this project we focus on the *perceptual* dimension: the reward surface the human actually experiences is not smooth — it has perceptual asymmetries. The human's ability to distinguish two parameter settings depends on "where in the parameter space" the settings lie, governed by the just-noticeable difference (JND) of each parameter. A good optimizer must therefore "not waste queries" on trials whose predicted difference falls below the human's perceptual threshold.
 
 We present a JND-aware variant of Expected Improvement. At each iteration, candidates whose parameter vector is perceptually indistinguishable from the current best are **penalized** in the acquisition function. The result, we hypothesize, is an optimizer that preserves EI's precision on symmetric surfaces while achieving slightly better performance on surfaces where perceptual asymmetry matters.
 
