@@ -1,35 +1,28 @@
 """
-demo_step2.py
--------------
-Produces two figures into results/figures/:
-
+Md Mainuddin Sagar-
+-
+demo_step2.py produces two figures into results/figures/:
   fig1_torque_profile.png  : torque vs gait phase for 4 parameter sets, with JND bands.
   fig2_walker_phase.png    : gait phase over 3 strides.
 
-Run:
+Now the main run:
     python demo_step2.py
 """
 from __future__ import annotations
-
 from pathlib import Path
-
 import matplotlib.pyplot as plt
 import numpy as np
-
 from src.torque_profile import (
     PARAM_BOUNDS, PARAM_JND, PARAM_NAMES, torque_profile_array
 )
 from src.walker import Walker
 
-
 FIG_DIR = Path("results/figures")
 FIG_DIR.mkdir(parents=True, exist_ok=True)
-
 
 def make_fig1():
     phases = np.linspace(0.0, 1.0, 501)
     mass = 70.0
-
     param_sets = [
         ("low magnitude",   np.array([0.20, 0.45, 0.10, 0.25])),
         ("mid magnitude",   np.array([0.20, 0.45, 0.10, 0.50])),
@@ -54,7 +47,6 @@ def make_fig1():
     plt.close(fig)
     print(f"wrote {out}")
 
-
 def make_fig2():
     w = Walker(stride_seconds=1.0, phase0=0.0)
     dt = 0.01
@@ -76,7 +68,6 @@ def make_fig2():
     fig.savefig(out, dpi=160)
     plt.close(fig)
     print(f"wrote {out}")
-
 
 if __name__ == "__main__":
     make_fig1()
