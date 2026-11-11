@@ -1,18 +1,19 @@
+% Md Mainuddin Sagar
 % fig4_human_oracle.m
 % Left: Bradley-Terry preference probability.
 % Right: JND-aware tie zone on a (peak_timing, peak_torque) slice.
-% Pure MATLAB — no external data needed.
+% Pure MATLAB
 %
-% RUN: open in MATLAB 2026, Current Folder = repo root, press Run.
+% Running process: openning in MATLAB 2026 in my macbook, Current Folder = repo root, press Run.
 
 clear; clc; close all;
 
-%% ============================ STYLE BLOCK ================================
+%% STYLE BLOCK
 OUT_DIR  = fullfile('figures', 'output');
 OUT_NAME = 'fig4_human_oracle_matlab';
 BETAS    = [1.0 5.0 20.0];
 N_GRID   = 120;
-% ========================================================================
+%
 
 if ~exist(OUT_DIR, 'dir'), mkdir(OUT_DIR); end
 
