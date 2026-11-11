@@ -1,31 +1,25 @@
 """
-demo_step6.py
--------------
-Produces two figures:
-
+Md Mainuddin Sagar-
+-
+demo_step6.py produces two figures:
   fig6a_convergence.png : best-so-far vs iteration for 5 methods on the
                           unimodal and multimodal surfaces.
   fig6b_gp_evolution.png : GP posterior mean at the true optimum across
                           iterations for EI vs JND-EI (shows convergence).
 
-Run:
+Now the main run:
     python demo_step6.py
 """
 from __future__ import annotations
-
 from pathlib import Path
-
 import matplotlib.pyplot as plt
 import numpy as np
-
 from src.experiment import run_optimizer
 from src.metrics import best_so_far_curve
 from src.reward_surfaces import all_surfaces
 
-
 FIG_DIR = Path("results/figures")
 FIG_DIR.mkdir(parents=True, exist_ok=True)
-
 
 def make_fig6a():
     methods = ["random", "grid", "ei", "ts", "jnd_ei"]
@@ -57,7 +51,6 @@ def make_fig6a():
     fig.savefig(out, dpi=140)
     plt.close(fig)
     print(f"wrote {out}")
-
 
 def make_fig6b():
     surfaces = all_surfaces()
@@ -96,7 +89,6 @@ def make_fig6b():
     fig.savefig(out, dpi=140)
     plt.close(fig)
     print(f"wrote {out}")
-
 
 if __name__ == "__main__":
     make_fig6a()
