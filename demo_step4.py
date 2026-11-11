@@ -1,40 +1,34 @@
 """
-demo_step4.py
--------------
-Produces results/figures/fig4_human_oracle.png : a two-panel figure showing
+Md Mainuddin Sagar-
+-
+demo_step4.py produces results/figures/fig4_human_oracle.png : a two-panel figure showing
 
   Left panel : Bradley-Terry preference probability
                P(A > B) = sigmoid(beta * (f(A) - f(B)))
                as a function of the reward difference f(A) - f(B).
-
   Right panel : JND-aware tie zone on a (peak_timing, peak_torque) slice.
                For each grid point, we ask: "is this grid point perceptually
                distinguishable from the optimum, given PARAM_JND?" It plots a
                binary map: 1 = tie zone (imperceptible), 0 = decisive.
 
-Run:
+Now the main run:
     python demo_step4.py
 """
 from __future__ import annotations
-
 from pathlib import Path
-
 import matplotlib.pyplot as plt
 import numpy as np
-
 from src.human_oracle import _normalized_distance
 from src.reward_surfaces import all_surfaces
 from src.torque_profile import PARAM_BOUNDS, PARAM_JND, PARAM_NAMES
 
-
 FIG_DIR = Path("results/figures")
 FIG_DIR.mkdir(parents=True, exist_ok=True)
-
 
 def make_fig4():
     surface = all_surfaces()[0]   # unimodal
 
-    # --- Left panel: Bradley-Terry preference probability -----------------
+    # Left panel: Bradley-Terry preference probability 
     deltas = np.linspace(-1.0, 1.0, 201)
     betas = [1.0, 5.0, 20.0]
     fig, axes = plt.subplots(1, 2, figsize=(12, 4.5), constrained_layout=True)
@@ -49,7 +43,7 @@ def make_fig4():
     ax.grid(True, alpha=0.3)
     ax.legend()
 
-    # --- Right panel: JND-aware tie zone on a 2D slice --------------------
+    # Right panel: JND-aware tie zone on a 2D slice 
     opt = surface.optimum
     pt_grid = np.linspace(PARAM_BOUNDS[1, 0], PARAM_BOUNDS[1, 1], 120)
     pq_grid = np.linspace(PARAM_BOUNDS[3, 0], PARAM_BOUNDS[3, 1], 120)
