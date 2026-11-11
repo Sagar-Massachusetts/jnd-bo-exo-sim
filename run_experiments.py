@@ -1,4 +1,6 @@
 """
+Md Mainuddin Sagar-
+-
 running_experiments.py
 CLI runner for the JND-bo-exo-sim sweep.
 Quick smoke (default, ~30s, small budgets — for CI / sanity):
