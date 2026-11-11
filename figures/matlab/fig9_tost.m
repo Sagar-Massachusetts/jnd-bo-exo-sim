@@ -1,17 +1,18 @@
+% Md Mainuddin Sagar
 % fig9_tost.m
-% TOST equivalence figure. Runs standalone in MATLAB 2026.
+% TOST equivalence figure. Runs standalone in MATLAB 2026 in my macbook.
 % Reads results/logs/tost_summary.json.
 
 clear; clc; close all;
 
-%% ============================ STYLE BLOCK ================================
+%% STYLE BLOCK 
 %FIG_TITLE      = 'TOST equivalence of EI and JND-EI optima (JND-informed bounds)';
 OUT_DIR        = fullfile('figures', 'output');
 OUT_NAME       = 'fig9_tost_equivalence_matlab';
 SURFACES_ORDER = {'unimodal','multimodal','asymmetric','timing_sensitive'};
 PARAM_JND      = [0.030, 0.030, 0.030, 0.100];
 PARAM_LABELS   = {'Rise time','Peak timing','Fall time','Peak torque'};
-% ========================================================================
+% 
 
 if ~exist(OUT_DIR,'dir'), mkdir(OUT_DIR); end
 tost = jsondecode(fileread(fullfile('results','logs','tost_summary_publication.json')));
@@ -30,13 +31,13 @@ for si = 1:numel(SURFACES_ORDER)
     for i = 1:4
         p = r.params(i);
         m  = p.mean_diff;
-        % --- CI fields: new schema first, legacy fallback ---
+        % --- CI fields: new schema first, legacy fallback 
         if isfield(p,'ci95_lo')
             lo = p.ci95_lo;  hi = p.ci95_hi;
         else
             lo = p.ci_lo;    hi = p.ci_hi;
         end
-        % --- equivalence flag: new schema first, legacy fallback ---
+        % --- equivalence flag: new schema first, legacy fallback 
         if isfield(p,'equivalent_95')
             eq = p.equivalent_95;
         else
