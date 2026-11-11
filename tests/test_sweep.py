@@ -1,10 +1,8 @@
-"""Tests for src.sweep."""
+"""Tests for src.sweep case."""
 import numpy as np
 import pytest
-
 from src.reward_surfaces import all_surfaces
 from src.sweep import run_sweep
-
 
 @pytest.fixture(scope="module")
 def tiny_sweep():
@@ -21,12 +19,10 @@ def tiny_sweep():
         n_candidates=64,
     )
 
-
 def test_sweep_produces_expected_keys(tiny_sweep):
     for key in ("best_so_far_mean", "best_so_far_lo", "best_so_far_hi",
                 "regret_mean", "regret_std", "trials_to_reach_mean"):
         assert key in tiny_sweep
-
 
 def test_sweep_curves_have_correct_length(tiny_sweep):
     budget = tiny_sweep["budget"]
@@ -37,7 +33,6 @@ def test_sweep_curves_have_correct_length(tiny_sweep):
             assert tiny_sweep["best_so_far_lo"][key].shape == (budget,)
             assert tiny_sweep["best_so_far_hi"][key].shape == (budget,)
 
-
 def test_sweep_lo_le_mean_le_hi(tiny_sweep):
     for m in tiny_sweep["methods"]:
         for s in tiny_sweep["surface_names"]:
@@ -47,7 +42,6 @@ def test_sweep_lo_le_mean_le_hi(tiny_sweep):
             hi = tiny_sweep["best_so_far_hi"][key]
             assert np.all(lo <= mid + 1e-9)
             assert np.all(mid <= hi + 1e-9)
-
 
 def test_sweep_curves_are_monotone(tiny_sweep):
     for m in tiny_sweep["methods"]:
