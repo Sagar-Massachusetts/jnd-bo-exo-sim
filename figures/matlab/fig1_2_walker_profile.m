@@ -1,12 +1,13 @@
+% Md Mainuddin Sagar
 % fig1_2_walker_profile.m
-% Generates fig1 (4-parameter ankle torque profile) and fig2 (gait phase).
-% Pure MATLAB — no external data needed.
+% Generating fig1 (4-parameter ankle torque profile) and fig2 (gait phase).
+% Pure MATLAB
 %
-% RUN: open in MATLAB 2026, Current Folder = repo root, press Run.
+% Run process: opening in MATLAB 2026 in my macbook, Current Folder = repo root, press Run.
 
 clear; clc; close all;
 
-%% ============================ STYLE BLOCK ================================
+%% STYLE BLOCK
 OUT_DIR   = fullfile('figures', 'output');
 FIG1_NAME = 'fig1_torque_profile_matlab';
 FIG2_NAME = 'fig2_walker_phase_matlab';
@@ -14,11 +15,11 @@ TITLES    = {'4-parameter ankle torque profile', ...
              'Walker gait phase over 3 strides (period = 1.0 s)'};
 LINE_WIDTH = 1.8;
 COLORS     = lines(4);
-% ========================================================================
+% 
 
 if ~exist(OUT_DIR, 'dir'), mkdir(OUT_DIR); end
 
-%% ---- Torque profile (fig1) -----------------------------------------------
+%% Torque profile (fig1) 
 % Bounds from src/torque_profile.py
 lo = [0.10 0.30 0.05 0.10];
 hi = [0.40 0.60 0.20 1.00];
@@ -56,7 +57,7 @@ exportgraphics(fig1, fullfile(OUT_DIR, [FIG1_NAME '.svg']), 'ContentType', 'vect
 exportgraphics(fig1, fullfile(OUT_DIR, [FIG1_NAME '.png']), 'Resolution', 300);
 fprintf('Saved %s.{pdf,svg,png}\n', FIG1_NAME);
 
-%% ---- Gait phase (fig2) --------------------------------------------------
+%% Gait phase (fig2) 
 dt = 0.01;
 t = 0:dt:3;
 ph = mod(t / 1.0, 1);   % stride = 1.0 s
@@ -78,7 +79,7 @@ exportgraphics(fig2, fullfile(OUT_DIR, [FIG2_NAME '.svg']), 'ContentType', 'vect
 exportgraphics(fig2, fullfile(OUT_DIR, [FIG2_NAME '.png']), 'Resolution', 300);
 fprintf('Saved %s.{pdf,svg,png}\n', FIG2_NAME);
 
-%% ---- Local helper: torque profile -------------------------------------
+%% Local helper: torque profile 
 function tau = torque_fn(phase, p, mass)
     rise   = p(1); peak_t = p(2); fall = p(3); peak_tq = p(4);
     rise   = min(max(rise,   0.10), 0.40);
