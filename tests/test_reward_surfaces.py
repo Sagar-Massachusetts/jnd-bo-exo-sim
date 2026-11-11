@@ -8,7 +8,6 @@ from src.reward_surfaces import (
 )
 from src.torque_profile import PARAM_BOUNDS
 
-
 def test_all_surfaces_have_required_interface():
     for s in all_surfaces():
         assert hasattr(s, "name")
@@ -17,18 +16,15 @@ def test_all_surfaces_have_required_interface():
         assert s.optimum.shape == (4,)
         assert isinstance(s.optimum_value, float)
 
-
 def test_optimum_is_bounded():
     for s in all_surfaces():
         for i, p in enumerate(s.optimum):
             lo, hi = PARAM_BOUNDS[i]
             assert lo <= p <= hi, f"{s.name}: param {i} out of bounds"
 
-
 def test_reward_at_optimum_matches_optimum_value():
     for s in all_surfaces():
         assert s.f(s.optimum) == pytest.approx(s.optimum_value, rel=1e-8)
-
 
 def test_reward_is_bounded_0_to_1_on_entire_domain():
     n = 6
@@ -38,7 +34,6 @@ def test_reward_is_bounded_0_to_1_on_entire_domain():
         for combo in product(*grid):
             v = s.f(np.array(combo))
             assert 0.0 - 1e-9 <= v <= 1.0 + 1e-9, f"{s.name}: reward out of [0,1]"
-
 
 def test_unimodal_has_unique_global_max():
     s = UnimodalSurface()
@@ -55,7 +50,6 @@ def test_unimodal_has_unique_global_max():
     gap = np.linalg.norm((best_pt - s.optimum) / (PARAM_BOUNDS[:, 1] - PARAM_BOUNDS[:, 0]))
     assert gap < 0.30, f"unimodal: grid max far from true optimum, gap={gap}"
 
-
 def test_multimodal_has_two_distinct_basins():
     s = MultimodalSurface()
     from src.reward_surfaces import _from_unit
@@ -70,7 +64,6 @@ def test_multimodal_has_two_distinct_basins():
     assert v1 > 0.4 and v2 > 0.4, f"multimodal: basin peaks too low: {v1}, {v2}"
     assert vm < min(v1, v2), f"multimodal: midpoint not a valley: {vm} vs {v1},{v2}"
 
-
 def test_asymmetric_is_skewed_in_peak_timing():
     s = AsymmetricSurface()
     delta = 0.05
@@ -78,7 +71,6 @@ def test_asymmetric_is_skewed_in_peak_timing():
     p_plus = opt.copy();  p_plus[1]  += delta
     p_minus = opt.copy(); p_minus[1] -= delta
     assert s.f(p_minus) > s.f(p_plus), "asymmetric: peak_timing asymmetry not present"
-
 
 def test_timing_sensitive_is_more_sensitive_to_timing_than_magnitude():
     s = TimingSensitiveSurface()
