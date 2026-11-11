@@ -1,10 +1,9 @@
 """
-human_oracle.py
----------------
-Simulated human feedback used by the HIL optimizer.
+Md Mainuddin Sagar-
+-
+human_oracle.py simulated human feedback used by the HIL optimizer.
 
 Four feedback modes are supported:
-
 1. simulate_scalar_response(surface, params, noise_std, rng)
      -> float in [0, 1] with additive Gaussian noise, clipped to [0, 1].
      Models a metabolic-cost-like continuous measurement.
@@ -29,16 +28,11 @@ All functions accept an optional numpy Generator (rng) so experiments
 are reproducible by seeding.
 """
 from __future__ import annotations
-
 import numpy as np
-
 from src.reward_surfaces import RewardSurface
 from src.torque_profile import PARAM_BOUNDS, PARAM_JND, clamp_params
 
-
-# ---------------------------------------------------------------------------
 # Helpers
-# ---------------------------------------------------------------------------
 def _default_rng(rng):
     if rng is None:
         return np.random.default_rng()
@@ -46,10 +40,8 @@ def _default_rng(rng):
         return np.random.default_rng(int(rng))
     return rng
 
-
 def _sigmoid(x):
     return 1.0 / (1.0 + np.exp(-x))
-
 
 def _normalized_distance(params_A: np.ndarray, params_B: np.ndarray) -> np.ndarray:
     """Element-wise |Δ| / range, in physical units → unit cube."""
@@ -58,10 +50,7 @@ def _normalized_distance(params_A: np.ndarray, params_B: np.ndarray) -> np.ndarr
     span = PARAM_BOUNDS[:, 1] - PARAM_BOUNDS[:, 0]
     return np.abs(a - b) / span
 
-
-# ---------------------------------------------------------------------------
 # 1. Scalar response
-# ---------------------------------------------------------------------------
 def simulate_scalar_response(surface: RewardSurface,
                              params: np.ndarray,
                              noise_std: float = 0.02,
@@ -72,10 +61,7 @@ def simulate_scalar_response(surface: RewardSurface,
     noisy = truth + rng.normal(0.0, noise_std)
     return float(np.clip(noisy, 0.0, 1.0))
 
-
-# ---------------------------------------------------------------------------
 # 2. Bradley-Terry preference
-# ---------------------------------------------------------------------------
 def simulate_preference_response(surface: RewardSurface,
                                  params_A: np.ndarray,
                                  params_B: np.ndarray,
@@ -96,10 +82,7 @@ def simulate_preference_response(surface: RewardSurface,
     pA = _sigmoid(noise_beta * (fA - fB))
     return 1 if rng.random() < pA else -1
 
-
-# ---------------------------------------------------------------------------
 # 3. JND-aware preference (the project's novel comparator)
-# ---------------------------------------------------------------------------
 def simulate_jnd_aware_preference(surface: RewardSurface,
                                   params_A: np.ndarray,
                                   params_B: np.ndarray,
@@ -127,10 +110,7 @@ def simulate_jnd_aware_preference(surface: RewardSurface,
     return simulate_preference_response(surface, params_A, params_B,
                                         noise_beta=noise_beta, rng=rng)
 
-
-# ---------------------------------------------------------------------------
 # 4. Ordinal rating
-# ---------------------------------------------------------------------------
 def simulate_ordinal_rating(surface: RewardSurface,
                             params: np.ndarray,
                             n_levels: int = 5,
