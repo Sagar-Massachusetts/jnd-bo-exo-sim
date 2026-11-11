@@ -2,7 +2,7 @@
 
 **Md Mainuddin Sagar** · ME 556 Final Project · The Pennsylvania State University (Penn State), University Park · November 2026
 
--
+---
 
 Abstract
 
@@ -16,7 +16,7 @@ Keywords: Bayesian optimization, exoskeleton, human-in-the-loop, just-noticeable
 
 Human-in-the-loop (HIL) optimization has become the dominant paradigm for tuning the assistance profile of wearable exoskeletons. The human's subjective response — comfort, preference, or metabolic cost — is the objective the optimizer maximizes; the exoskeleton's torque parameters are the decision variables. The two most common algorithms used in this context are Bayesian optimization (BO) via Expected Improvement, and the covariance matrix adaptation evolution strategy (CMA-ES).
 
-A central unsolved question is *what reward function* the optimizer should target. Preference and comfort are cheap to elicit but subjective; metabolic cost is objective but requires lab-grade indirect calorimetry. In this project we focus on the *perceptual* dimension: the reward surface the human actually experiences is not smooth — it has perceptual asymmetries. The human's ability to distinguish two parameter settings depends on "where in the parameter space" the settings lie, governed by the just-noticeable difference (JND) of each parameter. A good optimizer must therefore "not waste queries" on trials whose predicted difference falls below the human's perceptual threshold.
+A central unsolved question is *what reward function* the optimizer should target. Preference and comfort are cheap to elicit but subjective; metabolic cost is objective but requires lab-grade indirect calorimetry. In this project we focus on the *perceptual* dimension: the reward surface the human actually experiences is not smooth — it has perceptual asymmetries. The human's ability to distinguish two parameter settings depends on **where in the parameter space** the settings lie, governed by the just-noticeable difference (JND) of each parameter. A good optimizer must therefore **not waste queries** on trials whose predicted difference falls below the human's perceptual threshold.
 
 We present a JND-aware variant of Expected Improvement. At each iteration, candidates whose parameter vector is perceptually indistinguishable from the current best are **penalized** in the acquisition function. The result, we hypothesize, is an optimizer that preserves EI's precision on symmetric surfaces while achieving slightly better performance on surfaces where perceptual asymmetry matters.
 
