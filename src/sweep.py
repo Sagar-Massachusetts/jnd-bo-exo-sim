@@ -1,11 +1,10 @@
 """
-sweep.py
---------
-Multi-seed optimizer sweep. Runs each (method, surface) pair across N seeds
+Md Mainuddin Sagar-
+-
+sweep.py multi-seed optimizer sweep. Runs each (method, surface) pair across N seeds
 and returns the aggregate curves and metrics.
 
 Public API
-----------
     run_sweep(methods, surfaces, n_seeds=20, budget=30, n_initial=6,
               noise_std=0.02, gp_noise_std=0.03, n_candidates=256,
               out_dir="results/tables")
@@ -19,16 +18,12 @@ Public API
             'trials_to_reach_mean': {(method, surface_name): float}
 """
 from __future__ import annotations
-
 import csv
 from pathlib import Path
-
 import numpy as np
-
 from src.experiment import run_optimizer
 from src.metrics import best_so_far_curve, simple_regret, trials_to_reach
 from src.reward_surfaces import RewardSurface
-
 
 def _pad_or_truncate(curve: np.ndarray, T: int) -> np.ndarray:
     if len(curve) >= T:
@@ -37,7 +32,6 @@ def _pad_or_truncate(curve: np.ndarray, T: int) -> np.ndarray:
     out[:len(curve)] = curve
     out[len(curve):] = curve[-1]   # pad with last value
     return out
-
 
 def run_sweep(methods: list[str],
               surfaces: list[RewardSurface],
@@ -62,9 +56,7 @@ def run_sweep(methods: list[str],
 
     # Convergence target: 80% of optimum value
     target_fraction = 0.80
-
     rows = []
-
     total = len(methods) * len(surfaces) * n_seeds
     done = 0
 
@@ -108,7 +100,7 @@ def run_sweep(methods: list[str],
                 "final_best_mean": float(best_so_far_mean[key][-1]),
             })
 
-    # Write CSV
+    # Writing CSV
     csv_path = out_path / "sweep_summary.csv"
     with open(csv_path, "w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
