@@ -1,18 +1,19 @@
+% Md Mainuddin Sagar
 % fig3_reward_surfaces.m
 % 2x2 panel of the four synthetic reward surfaces, sliced over
 % (peak_timing, peak_torque) with the other two params at their optimum.
-% Pure MATLAB — no external data needed.
+% Pure MATLAB 
 %
-% RUN: open in MATLAB 2026, Current Folder = repo root, press Run.
+% Run Process: openning in MATLAB 2026 in my macbook, Current Folder = repo root, press Run.
 
 clear; clc; close all;
 
-%% ============================ STYLE BLOCK ================================
+%% STYLE BLOCK
 OUT_DIR  = fullfile('figures', 'output');
 OUT_NAME = 'fig3_reward_surfaces_matlab';
 FIG_TITLE = 'Four synthetic reward surfaces (peak\_timing vs peak\_torque)';
 N_GRID = 120;
-% ========================================================================
+%
 
 if ~exist(OUT_DIR, 'dir'), mkdir(OUT_DIR); end
 
@@ -79,7 +80,7 @@ exportgraphics(fig, fullfile(OUT_DIR, [OUT_NAME '.svg']), 'ContentType', 'vector
 exportgraphics(fig, fullfile(OUT_DIR, [OUT_NAME '.png']), 'Resolution', 300);
 fprintf('Saved %s.{pdf,svg,png}\n', OUT_NAME);
 
-%% ---- Local helpers -----------------------------------------------------
+%% Local helpers 
 function val = eval_surface(name, p, c, lo, hi, to_unit)
     u = to_unit(p);
     span = hi - lo;
