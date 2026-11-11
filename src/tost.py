@@ -1,11 +1,10 @@
 """
-tost.py
--------
-Two One-Sided Tests (TOST) for perceptual equivalence, with JND-informed
+Md Mainuddin Sagar-
+-
+tost.py two One-Sided Tests (TOST) for perceptual equivalence, with JND-informed
 equivalence bounds.
 
 The core question
------------------
 Given two sets of optima (from different acquisition strategies), are they
 perceptually the same? Standard null-hypothesis testing can only REJECT the
 null of zero difference — it can never CONFIRM the null. TOST solves this by
@@ -13,14 +12,12 @@ inverting the test: the null is "there is a meaningful difference" (larger
 than the equivalence bound), and we test whether we can reject it.
 
 JND-informed bounds
--------------------
 Instead of a generic bound (e.g., 5% of the range), we use PARAM_JND — the
 same perceptual thresholds already baked into the acquisition function. This
 means "equivalent" is defined as "below the threshold a human can perceive,"
 which is exactly what our research question cares about.
 
 Public API
-----------
     tost(sample_a, sample_b, bound, alpha=0.05)
         -> dict with keys: 'lower_ci', 'upper_ci', 'p_lower', 'p_upper',
                            'equivalent' (bool), 'mean_diff', 'bound'
@@ -30,18 +27,12 @@ Public API
            'all_equivalent' flag (True iff all four parameters are equivalent)
 """
 from __future__ import annotations
-
 import math
-
 import numpy as np
 from scipy import stats
-
 from src.torque_profile import PARAM_JND, PARAM_NAMES
 
-
-# ---------------------------------------------------------------------------
 # Core TOST
-# ---------------------------------------------------------------------------
 def tost(sample_a, sample_b, bound: float, alpha: float = 0.05) -> dict:
     """
     Two One-Sided Tests for the difference of means (two independent samples).
@@ -52,7 +43,6 @@ def tost(sample_a, sample_b, bound: float, alpha: float = 0.05) -> dict:
     We reject both to declare equivalence.
 
     Parameters
-    ----------
     sample_a, sample_b : array-like
         Two independent samples of the same scalar quantity.
     bound : float
@@ -63,7 +53,6 @@ def tost(sample_a, sample_b, bound: float, alpha: float = 0.05) -> dict:
         Overall significance level (default 0.05).
 
     Returns
-    -------
     dict with:
         'mean_diff'  : float      mean_a - mean_b
         'se'         : float      standard error of the difference
@@ -123,16 +112,12 @@ def tost(sample_a, sample_b, bound: float, alpha: float = 0.05) -> dict:
         "equivalent": equivalent,
     }
 
-
-# ---------------------------------------------------------------------------
 # Multi-parameter TOST on optima
-# ---------------------------------------------------------------------------
 def tost_on_optima(optima_a, optima_b, jnd=None, alpha: float = 0.05) -> dict:
     """
     Per-parameter TOST on the best parameter vector found by two methods.
 
     Parameters
-    ----------
     optima_a, optima_b : array-like, shape (n_samples, 4)
         The best-found parameter vector from each seed of method A and method B.
         These are typically obtained by scanning histories for argmax of
@@ -142,7 +127,6 @@ def tost_on_optima(optima_a, optima_b, jnd=None, alpha: float = 0.05) -> dict:
     alpha : float
 
     Returns
-    -------
     dict with keys:
         'params' : list of 4 dicts (one per parameter, from tost())
         'all_equivalent' : bool  True iff all 4 params are equivalent
@@ -171,10 +155,7 @@ def tost_on_optima(optima_a, optima_b, jnd=None, alpha: float = 0.05) -> dict:
         "worst_p": float(max(r["p_max"] for r in results)),
     }
 
-
-# ---------------------------------------------------------------------------
 # Helper: extract best-found parameter vector from a history
-# ---------------------------------------------------------------------------
 def best_params_from_history(history: dict) -> np.ndarray:
     """
     Return the parameter vector that achieved the highest TRUE reward in a
