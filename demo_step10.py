@@ -1,11 +1,10 @@
 """
-demo_step10.py
---------------
-Produces results/figures/fig10_master_summary.png : a 6-panel summary of the
+Md Mainuddin Sagar-
+-
+demo_step10.py produces results/figures/fig10_master_summary.png : a 6-panel summary of the
 entire project, suitable for a paper figure or thesis chapter.
 
 Panels
-------
 1. Convergence bands       : EI vs JND-EI vs random on unimodal
 2. Simple regret bar chart : all 5 methods × 4 surfaces
 3. TOST equivalence        : summary (from Step 9)
@@ -13,21 +12,17 @@ Panels
 5. Trials to 80%           : bar chart
 6. Overall method winner   : a text panel summarizing who won where
 
-Run:
+Now the main run:
     python demo_step10.py
 """
 from __future__ import annotations
-
 import json
 from pathlib import Path
-
 import matplotlib.pyplot as plt
 import numpy as np
-
 from src.metrics import best_so_far_curve, simple_regret, trials_to_reach
 from src.reward_surfaces import all_surfaces
 from src.sweep import run_sweep
-
 
 FIG_DIR = Path("results/figures")
 FIG_DIR.mkdir(parents=True, exist_ok=True)
@@ -40,7 +35,6 @@ METHOD_LABEL = {"random": "Random", "grid": "Grid", "ei": "EI",
 METHOD_COLOR = {"random": "gray", "grid": "tab:brown",
                 "ei": "tab:blue", "ts": "tab:green", "jnd_ei": "tab:red"}
 
-
 def _pad_or_truncate(curve, T):
     curve = np.asarray(curve, dtype=float)
     if len(curve) >= T:
@@ -49,7 +43,6 @@ def _pad_or_truncate(curve, T):
     out[:len(curve)] = curve
     out[len(curve):] = curve[-1]
     return out
-
 
 def make_fig10():
     surfaces = all_surfaces()
@@ -61,7 +54,7 @@ def make_fig10():
         n_initial=5, noise_std=0.02, gp_noise_std=0.03, n_candidates=256,
     )
 
-    # Load TOST from Step 9 (10 seeds) if available; otherwise skip panel 3
+    # Loading TOST from Step 9 (10 seeds)
     tost_path = LOGS_DIR / "tost_summary.json"
     if tost_path.exists():
         tost = json.load(open(tost_path))
@@ -71,7 +64,7 @@ def make_fig10():
     fig = plt.figure(figsize=(15, 10), constrained_layout=True)
     gs = fig.add_gridspec(3, 3, height_ratios=[1, 1, 1])
 
-    # ---------------- Panel 1: convergence bands on unimodal ---------------
+    # Panel 1: convergence bands on unimodal
     ax1 = fig.add_subplot(gs[0, 0])
     budget = res["budget"]
     t = np.arange(1, budget + 1)
@@ -89,7 +82,7 @@ def make_fig10():
     ax1.legend(fontsize=8)
     ax1.grid(True, alpha=0.3)
 
-    # ---------------- Panel 2: regret bar chart (all surfaces) -------------
+    # Panel 2: regret bar chart (all surfaces)
     ax2 = fig.add_subplot(gs[0, 1])
     x = np.arange(len(surface_names))
     width = 0.16
@@ -105,7 +98,7 @@ def make_fig10():
     ax2.legend(fontsize=7)
     ax2.grid(True, alpha=0.3, axis="y")
 
-    # ---------------- Panel 3: TOST equivalence summary -------------------
+    # Panel 3: TOST equivalence summary
     ax3 = fig.add_subplot(gs[0, 2])
     if tost:
         s_names = list(tost.keys())
@@ -126,7 +119,7 @@ def make_fig10():
                  transform=ax3.transAxes)
         ax3.set_title("(3) TOST equivalence")
 
-    # ---------------- Panel 4: GP convergence at optimum -----------------
+    # Panel 4: GP convergence at optimum
     ax4 = fig.add_subplot(gs[1, 0])
     for m in ["ei", "jnd_ei"]:
         means = []
@@ -143,7 +136,7 @@ def make_fig10():
     ax4.legend(fontsize=8)
     ax4.grid(True, alpha=0.3)
 
-    # ---------------- Panel 5: trials to 80% (bar chart) -----------------
+    # Panel 5: trials to 80% (bar chart)
     ax5 = fig.add_subplot(gs[1, 1])
     for i, m in enumerate(METHODS):
         means = [res["trials_to_reach_mean"][(m, s)] for s in surface_names]
@@ -155,17 +148,17 @@ def make_fig10():
     ax5.set_title("(5) Trials to 80% target reward")
     ax5.grid(True, alpha=0.3, axis="y")
 
-    # ---------------- Panel 6: overall winner summary ---------------------
+    # Panel 6: overall winner summary
     ax6 = fig.add_subplot(gs[1, 2])
     ax6.axis("off")
-    # compute winner per surface
+    # computing winner per surface
     lines = ["Overall winner per surface:", ""]
     for s in surface_names:
         regrets = {m: res["regret_mean"][(m, s)] for m in METHODS}
         winner = min(regrets, key=regrets.get)
         lines.append(f"  {s:18s} → {METHOD_LABEL[winner]:>10s}  "
                      f"(regret={regrets[winner]:.3f})")
-    # text summary of Step 7/9 key insight
+    # texting summary of Step 7/9 key insight
     lines.append("")
     lines.append("Key result:")
     lines.append("  Bayesian optimization (EI/JND-EI)")
