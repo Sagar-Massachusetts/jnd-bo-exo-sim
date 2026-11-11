@@ -1,19 +1,17 @@
 """
-demo_step9.py
--------------
-Produces results/figures/fig9_tost_equivalence.png : a 4-panel figure showing
+Md Mainuddin Sagar-
+-
+demo_step9.py produces results/figures/fig9_tost_equivalence.png : a 4-panel figure showing
 the TOST confidence interval vs. the JND equivalence bound for EI vs JND-EI,
 on each of the four reward surfaces.
 
 Reading the plot
-----------------
 Each panel is one surface (unimodal, multimodal, asymmetric, timing_sensitive).
 For each parameter (rise_time, peak_timing, fall_time, peak_torque), we show
 a horizontal error bar: the 90% CI of the mean difference between EI and JND-EI.
 Two green dashed lines mark ±JND — the perceptual equivalence band.
 
 Interpretation
---------------
 - If the CI is ENTIRELY INSIDE ±JND → equivalent → "perceptually the same"
 - If the CI CROSSES a JND bound  → inconclusive at that sample size
 - If the CI is ENTIRELY OUTSIDE ±JND → not equivalent → "perceptually different"
@@ -22,7 +20,7 @@ We expect: on symmetric surfaces (unimodal, asymmetric, multimodal),
 all 4 parameters are equivalent. On timing_sensitive, at least one
 timing parameter is not equivalent — exactly the perceptual asymmetry.
 
-Run:
+Now the main run:
     python demo_step9.py
 """
 from __future__ import annotations
@@ -38,16 +36,14 @@ from src.sweep import run_sweep
 from src.tost import best_params_from_history, tost_on_optima
 from src.torque_profile import PARAM_JND, PARAM_NAMES
 
-
 FIG_DIR = Path("results/figures")
 FIG_DIR.mkdir(parents=True, exist_ok=True)
 LOGS_DIR = Path("results/logs")
 LOGS_DIR.mkdir(parents=True, exist_ok=True)
 
-
 def _gather_optima_by_method(res, method):
     """
-    For a given method, gather best_params from each seed for each surface.
+    So, for a given method, we are gathering best_params from each seed for each surface.
     Returns dict: surface_name -> ndarray (n_seeds, 4)
     """
     out = {}
@@ -56,7 +52,6 @@ def _gather_optima_by_method(res, method):
         params_list = np.stack([best_params_from_history(h) for h in hist_list], axis=0)
         out[s] = params_list
     return out
-
 
 def _plot_one_surface(ax, surface_name, tost_res, title_prefix=""):
     """Plot 4 horizontal error bars (one per parameter) with JND bounds."""
@@ -67,13 +62,13 @@ def _plot_one_surface(ax, surface_name, tost_res, title_prefix=""):
     hi = np.array([p["ci_hi"] for p in params])
     xerr = np.stack([means - lo, hi - means], axis=0)
 
-    # Colours: green if equivalent, red if not
+    # Proof by Colours: green if equivalent, red if not
     colors = ["tab:green" if p["equivalent"] else "tab:red" for p in params]
     for y, m, e, c in zip(y_pos, means, xerr.T, colors):
         ax.errorbar(m, y, xerr=[[e[0]], [e[1]]], fmt="o", color=c,
                     capsize=4, markersize=8, linewidth=2)
 
-    # JND bounds
+    # JND bounds for the parameters
     for i, j in enumerate(PARAM_JND):
         ax.plot([-j, -j], [i - 0.3, i + 0.3], color="black", linestyle="--",
                 alpha=0.6, linewidth=1)
@@ -86,7 +81,6 @@ def _plot_one_surface(ax, surface_name, tost_res, title_prefix=""):
     ax.set_xlabel("mean difference (EI - JND-EI)")
     ax.set_title(f"{title_prefix}{surface_name}  (all eq = {tost_res['all_equivalent']})")
     ax.grid(True, alpha=0.3, axis="x")
-
 
 def make_fig9():
     surfaces = all_surfaces()
@@ -109,7 +103,7 @@ def make_fig9():
     for s in res["surface_names"]:
         tost_by_surface[s] = tost_on_optima(ei_opt[s], jnd_opt[s])
 
-    # Save JSON summary
+    # Now saving JSON summary
     out_json = LOGS_DIR / "tost_summary.json"
     with open(out_json, "w") as f:
         json.dump(
@@ -127,7 +121,7 @@ def make_fig9():
         )
     print(f"wrote {out_json}")
 
-    # Figure
+    # Figure generation
     fig, axes = plt.subplots(2, 2, figsize=(12, 7.5), constrained_layout=True)
     axes = axes.ravel()
     for ax, s in zip(axes, res["surface_names"]):
