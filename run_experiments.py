@@ -1,21 +1,13 @@
 """
-run_experiments.py
-------------------
+running_experiments.py
 CLI runner for the JND-bo-exo-sim sweep.
-
-Usage
------
 Quick smoke (default, ~30s, small budgets — for CI / sanity):
     python run_experiments.py --quick
-
 Full sweep (uses ~20-30 minutes):
     python run_experiments.py --budget 30 --n-seeds 20
-
 Custom out dir:
     python run_experiments.py --budget 30 --n-seeds 20 --out-dir results/run_big
-
-What it writes
---------------
+What it writes for me
     <out_dir>/figures/fig7a_convergence_bands.png
     <out_dir>/figures/fig7b_summary_bars.png
     <out_dir>/tables/sweep_summary.csv
@@ -36,7 +28,7 @@ import demo_step7 as demo7
 
 
 def _to_jsonable(hist: dict) -> dict:
-    """Convert a history dict with numpy arrays/lists into JSON-safe form."""
+    """Converting a history dict with numpy arrays/lists into JSON-safe form."""
     out = {}
     for k, v in hist.items():
         if isinstance(v, np.ndarray):
@@ -50,7 +42,6 @@ def _to_jsonable(hist: dict) -> dict:
         else:
             out[k] = v
     return out
-
 
 def _print_summary(res: dict):
     """Pretty-print a summary table to stdout."""
@@ -72,7 +63,6 @@ def _print_summary(res: dict):
     print()
     print("Simple regret (lower is better). 'Best' method per column is bolded in the report.")
     print()
-
 
 def main():
     ap = argparse.ArgumentParser()
@@ -126,13 +116,10 @@ def main():
         n_candidates=args.n_candidates,
         out_dir=str(Path(args.out_dir) / "tables"),
     )
-
     _print_summary(res)
-
-    # Figures — reuse the demo_step7 machinery but with our own output dir
     demo7.FIG_DIR = Path(args.out_dir) / "figures"
     demo7.FIG_DIR.mkdir(parents=True, exist_ok=True)
-    # renumber the output filenames so they don't clash with Step 7's
+    # renumbering the output filenames so they don't clash with Step 7's
     orig_7a = demo7.make_fig7a
     orig_7b = demo7.make_fig7b
     try:
@@ -161,7 +148,6 @@ def main():
         with open(out_path, "w") as f:
             json.dump(payload, f, indent=2)
         print(f"wrote {out_path}")
-
 
 if __name__ == "__main__":
     main()
