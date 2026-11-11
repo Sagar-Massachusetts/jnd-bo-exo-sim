@@ -1,20 +1,21 @@
+% Md Mainuddin Sagar
 % fig6b_gp_evolution.m
 % Two panels: (left) GP mean at the true optimum over iterations,
 %             (right) GP std at the true optimum over iterations.
 % Reads results/logs/gp_evolution_unimodal.json (exported from Python).
 %
-% RUN: open in MATLAB 2026, Current Folder = repo root, press Run.
+% Running in my macbook: open in MATLAB 2026, Current Folder = repo root, press Run.
 
 clear; clc; close all;
 
-%% ============================ STYLE BLOCK ================================
+%% STYLE BLOCK
 OUT_DIR  = fullfile('figures', 'output');
 OUT_NAME = 'fig6b_gp_evolution_matlab';
 JSON     = fullfile('results', 'logs', 'gp_evolution_unimodal.json');
 COLORS   = [0.12 0.47 0.71; 0.84 0.15 0.16];
 LABELS   = {'EI', 'JND-EI'};
 METHODS  = {'ei', 'jnd_ei'};
-% ========================================================================
+% 
 
 if ~exist(OUT_DIR, 'dir'), mkdir(OUT_DIR); end
 if ~exist(JSON, 'file')
