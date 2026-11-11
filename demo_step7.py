@@ -1,31 +1,24 @@
 """
-demo_step7.py
--------------
-Runs a 5-method × 4-surface × 20-seed sweep and produces two figures:
-
+Md Mainuddin Sagar-
+-
+demo_step7.py runs a 5-method × 4-surface × 20-seed sweep and produces two figures:
   fig7a_convergence_bands.png : best-so-far mean + 95% CI for all 5 methods
                                  on all 4 surfaces (2x2 grid).
   fig7b_summary_bars.png      : simple regret per method, 4 groups (one per surface).
-
 Also writes results/tables/sweep_summary.csv.
 
-Run:
+Now the main run:
     python demo_step7.py
 """
 from __future__ import annotations
-
 from pathlib import Path
-
 import matplotlib.pyplot as plt
 import numpy as np
-
 from src.reward_surfaces import all_surfaces
 from src.sweep import run_sweep
 
-
 FIG_DIR = Path("results/figures")
 FIG_DIR.mkdir(parents=True, exist_ok=True)
-
 
 METHODS = ["random", "grid", "ei", "ts", "jnd_ei"]
 METHOD_LABEL = {
@@ -42,7 +35,6 @@ METHOD_COLOR = {
     "ts": "tab:green",
     "jnd_ei": "tab:red",
 }
-
 
 def make_fig7a(res: dict):
     surfaces = res["surface_names"]
@@ -73,7 +65,6 @@ def make_fig7a(res: dict):
     plt.close(fig)
     print(f"wrote {out}")
 
-
 def make_fig7b(res: dict):
     surfaces = res["surface_names"]
     n_methods = len(METHODS)
@@ -96,7 +87,6 @@ def make_fig7b(res: dict):
     fig.savefig(out, dpi=140)
     plt.close(fig)
     print(f"wrote {out}")
-
 
 if __name__ == "__main__":
     surfaces = all_surfaces()
