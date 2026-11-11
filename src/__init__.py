@@ -1,11 +1,10 @@
 """
-jnd-bo-exo-sim
-==============
-Simulation testbed for JND-informed Bayesian optimization of ankle-exoskeleton
+Md Mainuddin Sagar-
+-
+jnd-bo-exo-sim: Simulation testbed for JND-informed Bayesian optimization of ankle-exoskeleton
 assistance profiles.
 
 Modules
--------
 walker           : planar simulated walker (dynamics + gait phase).
 torque_profile   : 4-parameter ankle-exoskeleton torque policy.
 reward_surfaces  : library of synthetic performance / preference surfaces.
