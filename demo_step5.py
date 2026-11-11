@@ -1,7 +1,7 @@
 """
-demo_step5.py
--------------
-Produces results/figures/fig5_gp_surrogate.png : a four-panel figure showing
+Md Mainuddin Sagar-
+-
+demo_step5.py produces results/figures/fig5_gp_surrogate.png : a four-panel figure showing
 how the GP posterior evolves as more training data is observed, on a 2D slice
 (peak_timing, peak_torque) of the unimodal reward surface.
 
@@ -11,31 +11,25 @@ Panels (top to bottom):
   3. GP posterior mean with N=30 training points
   4. GP posterior std with N=30 training points
 
-Run:
+Now the main run:
     python demo_step5.py
 """
 from __future__ import annotations
-
 from pathlib import Path
-
 import matplotlib.pyplot as plt
 import numpy as np
-
 from src.gp_model import GPModel
 from src.reward_surfaces import all_surfaces
 from src.torque_profile import PARAM_BOUNDS, PARAM_NAMES
 
-
 FIG_DIR = Path("results/figures")
 FIG_DIR.mkdir(parents=True, exist_ok=True)
-
 
 def _slice_grid(n=60):
     pt = np.linspace(PARAM_BOUNDS[1, 0], PARAM_BOUNDS[1, 1], n)
     pq = np.linspace(PARAM_BOUNDS[3, 0], PARAM_BOUNDS[3, 1], n)
     PT, PQ = np.meshgrid(pt, pq, indexing="ij")
     return pt, pq, PT, PQ
-
 
 def _to_full_params(surface, PT, PQ):
     opt = surface.optimum
@@ -46,7 +40,6 @@ def _to_full_params(surface, PT, PQ):
     P[..., 3] = PQ
     return P
 
-
 def make_fig5():
     surface = all_surfaces()[0]
     pt, pq, PT, PQ = _slice_grid(n=60)
@@ -56,7 +49,7 @@ def make_fig5():
         for j in range(PT.shape[1]):
             R_true[i, j] = surface.f(P_grid[i, j])
 
-    # --- Sample training points on the 2D slice ---------------------------
+    # Sample training points on the 2D slice 
     rng = np.random.default_rng(7)
 
     def _sample_train(n):
@@ -74,11 +67,11 @@ def make_fig5():
     P8, y8 = _sample_train(8)
     P30, y30 = _sample_train(30)
 
-    # Fit GPs
+    # Fitting GPs
     gp8 = GPModel(noise_std=0.02, seed=0).fit(P8, y8)
     gp30 = GPModel(noise_std=0.02, seed=0).fit(P30, y30)
 
-    # Predict on the slice
+    # Predicting on the slice
     P_flat = P_grid.reshape(-1, 4)
     mu8, _ = gp8.predict(P_flat)
     mu30, s30 = gp30.predict(P_flat)
@@ -86,7 +79,7 @@ def make_fig5():
     mu30 = mu30.reshape(PT.shape)
     s30 = s30.reshape(PT.shape)
 
-    # Plot
+    # Plotting figures
     fig, axes = plt.subplots(4, 1, figsize=(6.5, 14), constrained_layout=True)
     extent = [pq[0], pq[-1], pt[0], pt[-1]]
 
