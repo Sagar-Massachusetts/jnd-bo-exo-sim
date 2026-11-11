@@ -1,6 +1,6 @@
-Title: JND-Informed Bayesian Optimization of Ankle-Exoskeleton Assistance Profiles in a Simulated Robotic System
+**Title: JND-Informed Bayesian Optimization of Ankle-Exoskeleton Assistance Profiles in a Simulated Robotic System**
 
-Md Mainuddin Sagar · ME 556 Final Project · The Pennsylvania State University (Penn State), University Park · November 2026
+**Md Mainuddin Sagar** · ME 556 Final Project · The Pennsylvania State University (Penn State), University Park · November 2026
 
 -
 
