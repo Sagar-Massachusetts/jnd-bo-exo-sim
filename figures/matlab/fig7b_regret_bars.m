@@ -1,8 +1,9 @@
+% Md Mainuddin Sagar
 % fig7b_regret_bars.m
 % Simple regret bar chart: all 5 methods x 4 surfaces, mean +/- std over seeds.
 % Reads results/tables/sweep_summary.csv (20-seed).
 %
-% RUN: open in MATLAB 2026, Current Folder = repo root, press Run.
+% Running in my macbook: openning in MATLAB 2026, Current Folder = repo root, press Run.
 
 clear; clc; close all;
 
