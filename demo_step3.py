@@ -1,27 +1,22 @@
 """
-demo_step3.py
--------------
-Produces results/figures/fig3_reward_surfaces.png : a 2x2 panel of the four
-synthetic reward surfaces, sliced over (peak_timing, peak_torque) with the
+Md Mainuddin Sagar-
+-
+demo_step3.py produces results/figures/fig3_reward_surfaces.png : a 2x2 panel of the four
+simulated reward surfaces, sliced over (peak_timing, peak_torque) with the
 other two parameters fixed at the surface's own optimum.
 
-Run:
+The main run:
     python demo_step3.py
 """
 from __future__ import annotations
-
 from pathlib import Path
-
 import matplotlib.pyplot as plt
 import numpy as np
-
 from src.reward_surfaces import all_surfaces
 from src.torque_profile import PARAM_BOUNDS, PARAM_NAMES
 
-
 FIG_DIR = Path("results/figures")
 FIG_DIR.mkdir(parents=True, exist_ok=True)
-
 
 def make_fig3():
     surfaces = all_surfaces()
