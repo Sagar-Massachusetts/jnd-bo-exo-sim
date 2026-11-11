@@ -1,3 +1,4 @@
+% Md Mainuddin Sagar
 clear; clc; close all;
 
 %% STYLE BLOCK
@@ -12,7 +13,7 @@ SURFACE_LABELS = containers.Map(SURFACES, ...
                    {'Unimodal','Multimodal','Asymmetric','Time Sensitive'});
 METHOD_COLORS  = containers.Map(METHODS, ...
     {[0.50 0.50 0.50],[0.55 0.34 0.29],[0.12 0.47 0.71],[0.17 0.63 0.17],[0.84 0.15 0.16]});
-% ========================================================================
+% 
 
 if ~exist(OUT_DIR,'dir'), mkdir(OUT_DIR); end
 
@@ -37,12 +38,12 @@ for mi = 1:nM
     bar(x, means, width, 'FaceColor', METHOD_COLORS(m), 'EdgeColor','k');
     errorbar(x, means, stds, 'k.', 'LineWidth', 0.8);
 end
-% --- axes: tick labels + rotation ---
+% axes: tick labels + rotation 
 set(gca,'XTick',1:nS, ...
     'XTickLabel', cellfun(@(s) SURFACE_LABELS(s), SURFACES, 'UniformOutput',false), ...
     'XTickLabelRotation', 15);
 
-% --- global axes styling (set BEFORE ylabel so label inherits font) ---
+%  global axes styling (set BEFORE ylabel so label inherits font) 
 ax = gca;
 ax.FontSize          = 11;         % tick labels (x and y values)
 ax.FontName          = 'Helvetica';
@@ -51,17 +52,17 @@ ax.YLabel.FontSize   = 12;
 ax.YLabel.FontName   = 'Helvetica';
 % ax.Title.FontSize  = 12;         % uncomment if you re-enable title
 
-% --- axis label (created after font is set) ---
+%  axis label (created after font is set) 
 ylabel('Simple regret (lower is better)');
 %title('(a) Regret across surfaces');
 
-% --- legend ---
+% legend 
 legend(cellfun(@(m) METHOD_LABELS(m), METHODS, 'UniformOutput',false), ...
     'Location','best','FontSize',10,'NumColumns',2);
 
 grid off;    % restore original; use grid off only if intentional and applied to all panels
 
-% --- export ---
+% export
 exportgraphics(fig, fullfile(OUT_DIR,[OUT_NAME '_a.pdf']), 'ContentType','vector');
 exportgraphics(fig, fullfile(OUT_DIR,[OUT_NAME '_a.eps']), 'ContentType','vector');
 exportgraphics(fig, fullfile(OUT_DIR,[OUT_NAME '_a.svg']), 'ContentType','vector');
@@ -71,12 +72,12 @@ exportgraphics(fig, fullfile(OUT_DIR,[OUT_NAME '_a.png']), 'Resolution',1200);
 fig = figure('Color','w','Position',[100 100 700 500],'Visible','on');
 hold on; box on;
 
-% --- 1) list only surface entries, skip 'meta' if present ---
+% 1) list only surface entries, skip 'meta' if present
 snames = fieldnames(tost);
 snames = snames(~strcmp(snames,'meta'));
 nS_b   = numel(snames);
 
-% --- 2) read equivalence flag from either schema ---
+%  2) read equivalence flag from either schema
 vals = zeros(1, nS_b);
 ps   = nan(1, nS_b);
 deg  = false(1, nS_b);
@@ -93,7 +94,7 @@ for i = 1:nS_b
     if isfield(s,'degenerate_pair'), deg(i) = s.degenerate_pair; end
 end
 
-% --- 3) colors: green = equivalent, red = not, grey = missing ---
+%  3) colors: green = equivalent, red = not, grey = missing 
 barColors = zeros(nS_b,3);
 for i = 1:nS_b
     if isnan(vals(i)),     barColors(i,:) = [0.70 0.70 0.70];
@@ -102,7 +103,7 @@ for i = 1:nS_b
     end
 end
 
-% --- 4) bars + p-value labels ---
+% 4) bars + p-value labels 
 b = bar(1:nS_b, vals, 'FaceColor','flat');
 b.CData = barColors;
 for i = 1:nS_b
@@ -113,7 +114,7 @@ for i = 1:nS_b
     end
 end
 
-% --- 5) flag degenerate surfaces (EI == JND-EI) so the figure is honest ---
+% 5) flag degenerate surfaces (EI == JND-EI) so the figure is honest
 for i = 1:nS_b
     if deg(i)
         text(i, 1.05, 'degenerate', ...
@@ -122,12 +123,12 @@ for i = 1:nS_b
     end
 end
 
-% --- 6) axes ---
-% --- axes: tick labels + rotation ---
+% 6) axes
+%  axes: tick labels + rotation 
 set(gca,'XTick',1:nS_b,'XTickLabel',snames,'XTickLabelRotation',15);
 ylim([0 1.2]);
 
-% --- global axes styling (set BEFORE ylabel so label inherits font) ---
+% global axes styling (setting BEFORE ylabel so label inherits font)
 ax = gca;
 ax.FontSize          = 11;         % tick labels (x and y values)
 ax.FontName          = 'Helvetica';
@@ -138,7 +139,7 @@ ax.YLabel.FontName   = 'Helvetica';
 ylabel('1 = equivalent within JND');
 %title('(b) TOST: EI vs JND-EI');
 
-% --- 5b) status legend ---
+% 5b) status legend 
 hGreen = patch(NaN,NaN,[0.20 0.70 0.20]);
 hRed   = patch(NaN,NaN,[0.85 0.20 0.20]);
 hGrey  = patch(NaN,NaN,[0.70 0.70 0.70]);
@@ -148,7 +149,7 @@ legend([hGreen hRed hGrey], ...
 
 grid off;    % match panels (a)/(c); use off only if applied to all three
 
-% --- export ---
+% exportting
 exportgraphics(fig, fullfile(OUT_DIR,[OUT_NAME '_b.pdf']), 'ContentType','vector');
 exportgraphics(fig, fullfile(OUT_DIR,[OUT_NAME '_b.eps']), 'ContentType','vector');
 exportgraphics(fig, fullfile(OUT_DIR,[OUT_NAME '_b.svg']), 'ContentType','vector');
@@ -167,12 +168,12 @@ for mi = 1:nM
     x = (1:nS) + (mi - (nM+1)/2) * width;
     bar(x, means, width, 'FaceColor', METHOD_COLORS(m), 'EdgeColor','k');
 end
-% --- axes: tick labels + rotation ---
+% axes: tick labels + rotation
 set(gca,'XTick',1:nS, ...
     'XTickLabel', cellfun(@(s) SURFACE_LABELS(s), SURFACES, 'UniformOutput',false), ...
     'XTickLabelRotation', 15);
 
-% --- global axes styling (set BEFORE ylabel so label inherits font) ---
+% global axes styling (set BEFORE ylabel so label inherits font)
 ax = gca;
 ax.FontSize          = 11;         % tick labels (x and y values)
 ax.FontName          = 'Helvetica';
@@ -181,17 +182,17 @@ ax.YLabel.FontSize   = 12;
 ax.YLabel.FontName   = 'Helvetica';
 % ax.Title.FontSize  = 12;         % uncomment if you re-enable title
 
-% --- axis label (created after font is set) ---
+% axis label (created after font is set)
 ylabel('Trials to 80% of optimum');
 %title('(c) Sample efficiency');
 
-% --- legend (match panel (a): 10-pt, 2 columns) ---
+% legend (match panel (a): 10-pt, 2 columns) 
 legend(cellfun(@(m) METHOD_LABELS(m), METHODS, 'UniformOutput',false), ...
     'Location','best','FontSize',10,'NumColumns',2);
 
 grid off;    % match panels (a)/(b); use off only if applied to all three
 
-% --- export ---
+%  exporting
 exportgraphics(fig, fullfile(OUT_DIR,[OUT_NAME '_c.pdf']), 'ContentType','vector');
 exportgraphics(fig, fullfile(OUT_DIR,[OUT_NAME '_c.eps']), 'ContentType','vector');
 exportgraphics(fig, fullfile(OUT_DIR,[OUT_NAME '_c.svg']), 'ContentType','vector');
