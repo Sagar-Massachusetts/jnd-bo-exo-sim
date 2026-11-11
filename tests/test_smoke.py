@@ -1,11 +1,10 @@
 """
-Smoke test: imports every module. Fails if any module has a syntax or import error.
+I did smoke test: imports every module. Fails if any module has a syntax or import error.
 Runs before every commit via `pytest tests/`.
 """
 
 def test_import_src_package():
     import src  # noqa: F401
-
 
 def test_import_torque_profile():
     from src import torque_profile  # noqa: F401
