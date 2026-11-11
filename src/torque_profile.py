@@ -1,7 +1,7 @@
 """
-torque_profile.py
-------------------
-Constrained 4-parameter ankle-exoskeleton torque policy.
+Md Mainuddin Sagar-
+-
+torque_profile.py constrained 4-parameter ankle-exoskeleton torque policy.
 
 Parameter order (fixed project-wide):
     0: rise_time      [fraction of stride]   how long the torque takes to ramp up
@@ -17,12 +17,9 @@ The profile is::
 """
 
 from __future__ import annotations
-
 import numpy as np
 
-# ---------------------------------------------------------------------------
 # Bounds (safety envelopes for a healthy-user ankle exoskeleton study)
-# ---------------------------------------------------------------------------
 PARAM_NAMES = ["rise_time", "peak_timing", "fall_time", "peak_torque"]
 
 PARAM_BOUNDS = np.array([
@@ -32,11 +29,8 @@ PARAM_BOUNDS = np.array([
     [0.10, 1.00],
 ], dtype=float)
 
-# ---------------------------------------------------------------------------
 # Provisional JNDs (perceptual thresholds) aligned with PARAM_NAMES.
-# ---------------------------------------------------------------------------
 PARAM_JND = np.array([0.030, 0.030, 0.030, 0.100], dtype=float)
-
 
 def clamp_params(params: np.ndarray) -> np.ndarray:
     """Clamp a 4-vector of parameters into PARAM_BOUNDS."""
@@ -45,11 +39,9 @@ def clamp_params(params: np.ndarray) -> np.ndarray:
     hi = PARAM_BOUNDS[:, 1]
     return np.clip(params, lo, hi)
 
-
 def normalize_phase(phase: float) -> float:
     """Wrap any phase into [0, 1)."""
     return float(phase) % 1.0
-
 
 def torque_profile(phase: float, params: np.ndarray, body_mass_kg: float = 70.0) -> float:
     """
@@ -76,7 +68,6 @@ def torque_profile(phase: float, params: np.ndarray, body_mass_kg: float = 70.0)
         return tau_peak * (t_end - p) / denom
 
     return 0.0
-
 
 def torque_profile_array(phases: np.ndarray, params: np.ndarray,
                          body_mass_kg: float = 70.0) -> np.ndarray:
