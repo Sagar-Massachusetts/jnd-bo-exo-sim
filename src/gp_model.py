@@ -1,30 +1,25 @@
 """
-gp_model.py
------------
-Gaussian-process surrogate model for the reward surface.
+Md Mainuddin Sagar-
+-
+gp_model.py gaussian-process surrogate model for the reward surface.
 """
 from __future__ import annotations
-
 import warnings
-
 import numpy as np
 from sklearn.exceptions import ConvergenceWarning
 from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import ConstantKernel, Matern, WhiteKernel
 from sklearn.utils import check_random_state
-
 from src.torque_profile import PARAM_BOUNDS, clamp_params
 
 _LO = PARAM_BOUNDS[:, 0]
 _HI = PARAM_BOUNDS[:, 1]
 _SPAN = _HI - _LO
 
-
 def _to_unit(X: np.ndarray) -> np.ndarray:
     X = np.atleast_2d(np.asarray(X, dtype=float))
     X = np.array([clamp_params(row) for row in X])
     return (X - _LO) / _SPAN
-
 
 class GPModel:
     """Thin wrapper around sklearn's GP regressor for the HIL optimizer."""
@@ -116,7 +111,6 @@ class GPModel:
         Sample from the GP posterior at the given points.
 
         Returns
-        -------
         np.ndarray, shape (n_samples, M)
             Each row is one sample function evaluated at the M query points.
         """
