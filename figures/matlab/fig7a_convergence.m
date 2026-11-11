@@ -1,14 +1,15 @@
+% Md Mainuddin Sagar
 % fig7a_convergence.m
 % Convergence-band figure (mean ± 95% CI across seeds).
 % Reads results/tables/sweep_summary.csv for final values; if you need the
 % full curves, run demo_step7.py first to export histories, or use the
 % Python script figures/fig7a_convergence.py.
 %
-% Runs standalone in MATLAB 2026.
+% Runs standalone in MATLAB 2026 in my macbook.
 
 clear; clc; close all;
 
-%% ============================ STYLE BLOCK ================================
+%%  STYLE BLOCK 
 %FIG_TITLE      = 'Best-so-far reward across acquisition strategies';
 OUT_DIR        = fullfile('figures', 'output');
 OUT_NAME       = 'fig7a_convergence_bands_matlab';
@@ -17,7 +18,7 @@ METHODS        = {'random','ei','ts','jnd_ei'};
 METHOD_LABELS  = containers.Map(METHODS, {'Random','EI','Thompson','JND-EI'});
 METHOD_COLORS  = containers.Map(METHODS, ...
     {[0.50 0.50 0.50],[0.12 0.47 0.71],[0.17 0.63 0.17],[0.84 0.15 0.16]});
-% ========================================================================
+% 
 
 if ~exist(OUT_DIR,'dir'), mkdir(OUT_DIR); end
 T = readtable(fullfile('results','tables','sweep_summary_publication.csv'));
