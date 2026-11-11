@@ -1,13 +1,11 @@
 """
-experiment.py
--------------
-Main optimizer loop for the HIL experiment.
-
+Md Mainuddin Sagar-
+-
+experiment.py main optimizer loop for the HIL experiment.
 Given an acquisition function, a reward surface, and a budget, run a
 sequential optimization and log every step.
 
 Public API
-----------
     run_optimizer(surface, acquire_fn, budget, n_initial, noise_std,
                   gp_noise_std, seed, jnd=None, **acq_kwargs)
         -> dict with keys:
@@ -20,9 +18,7 @@ Public API
             'gp_mean_at_best'    : list of float (posterior mean at best point)
 """
 from __future__ import annotations
-
 import numpy as np
-
 from src.acquisitions import (
     expected_improvement,
     grid_acquire,
@@ -34,7 +30,6 @@ from src.gp_model import GPModel
 from src.human_oracle import simulate_scalar_response
 from src.reward_surfaces import RewardSurface
 from src.torque_profile import PARAM_BOUNDS
-
 
 def _run_one_step(surface, acquire_name, gp, X, y, best_so_far, best_params,
                   rng, acq_kwargs):
@@ -66,7 +61,6 @@ def _run_one_step(surface, acquire_name, gp, X, y, best_so_far, best_params,
         )
     raise ValueError(f"Unknown acquisition name: {acquire_name}")
 
-
 def run_optimizer(surface: RewardSurface,
                   acquire_name: str,
                   budget: int = 30,
@@ -77,10 +71,9 @@ def run_optimizer(surface: RewardSurface,
                   jnd: np.ndarray | None = None,
                   **acq_kwargs) -> dict:
     """
-    Run one optimization experiment on a reward surface.
+    Running one optimization experiment on a reward surface.
 
     Parameters
-    ----------
     surface : RewardSurface
     acquire_name : {"random", "grid", "ei", "ts", "jnd_ei"}
     budget : int
@@ -101,7 +94,7 @@ def run_optimizer(surface: RewardSurface,
         raise ValueError("n_initial must be < budget")
     rng = np.random.default_rng(seed)
 
-    # --- Initial random sampling -----------------------------------------
+    # Initial random sampling 
     X = []
     y = []
     for _ in range(n_initial):
@@ -121,11 +114,11 @@ def run_optimizer(surface: RewardSurface,
     gp_mean_at_best = []
 
     for it in range(budget - n_initial):
-        # Fit GP on all data so far
+        # Fitting GP on all data so far
         gp = GPModel(noise_std=gp_noise_std, seed=int(rng.integers(0, 2**31 - 1)))
         gp.fit(np.array(X), np.array(y))
 
-        # Log GP at the true optimum
+        # Logging GP at the true optimum
         m_opt, s_opt = gp.predict(surface.optimum[None, :])
         gp_mean_at_opt.append(float(m_opt[0]))
         gp_std_at_opt.append(float(s_opt[0]))
@@ -135,14 +128,14 @@ def run_optimizer(surface: RewardSurface,
 
         best_params = np.array(X[best_idx])
 
-        # Pick next query
+        # Picking next query
         p_next = _run_one_step(
             surface, acquire_name, gp, np.array(X), np.array(y),
             best_so_far=float(np.max(y)), best_params=best_params,
             rng=rng, acq_kwargs={**acq_kwargs, "jnd": jnd},
         )
 
-        # Evaluate on the simulated human
+        # Evaluating on the simulated human
         obs = simulate_scalar_response(surface, p_next, noise_std=noise_std, rng=rng)
         X.append(p_next)
         y.append(obs)
