@@ -4,11 +4,11 @@
 %             (right) GP std at the true optimum over iterations.
 % Reads results/logs/gp_evolution_unimodal.json (exported from Python).
 %
-% Running in my macbook: open in MATLAB 2026, Current Folder = repo root, press Run.
+% Running in my macbook: open in MATLAB 2026, Current Folder = repo root, then pressing Run.
 
 clear; clc; close all;
 
-%% STYLE BLOCK
+%% Style Block
 OUT_DIR  = fullfile('figures', 'output');
 OUT_NAME = 'fig6b_gp_evolution_matlab';
 JSON     = fullfile('results', 'logs', 'gp_evolution_unimodal.json');
