@@ -62,7 +62,7 @@ legend(cellfun(@(m) METHOD_LABELS(m), METHODS, 'UniformOutput',false), ...
 
 grid off;    % restore original; use grid off only if intentional and applied to all panels
 
-% export
+% exporting output
 exportgraphics(fig, fullfile(OUT_DIR,[OUT_NAME '_a.pdf']), 'ContentType','vector');
 exportgraphics(fig, fullfile(OUT_DIR,[OUT_NAME '_a.eps']), 'ContentType','vector');
 exportgraphics(fig, fullfile(OUT_DIR,[OUT_NAME '_a.svg']), 'ContentType','vector');
@@ -72,7 +72,7 @@ exportgraphics(fig, fullfile(OUT_DIR,[OUT_NAME '_a.png']), 'Resolution',1200);
 fig = figure('Color','w','Position',[100 100 700 500],'Visible','on');
 hold on; box on;
 
-% 1) list only surface entries, skip 'meta' if present
+% 1) listing only surface entries, skip 'meta' if present
 snames = fieldnames(tost);
 snames = snames(~strcmp(snames,'meta'));
 nS_b   = numel(snames);
@@ -114,7 +114,7 @@ for i = 1:nS_b
     end
 end
 
-% 5) flag degenerate surfaces (EI == JND-EI) so the figure is honest
+% 5) flagging degenerate surfaces (EI == JND-EI) so the figure is honest
 for i = 1:nS_b
     if deg(i)
         text(i, 1.05, 'degenerate', ...
