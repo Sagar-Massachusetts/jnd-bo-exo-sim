@@ -1,13 +1,13 @@
 % Md Mainuddin Sagar
 % fig1_2_walker_profile.m
 % Generating fig1 (4-parameter ankle torque profile) and fig2 (gait phase).
-% Pure MATLAB
+% Pure MATLAB validation
 %
-% Run process: opening in MATLAB 2026 in my macbook, Current Folder = repo root, press Run.
+% Running process: opening in MATLAB 2026 in my macbook, Current Folder = repo root, then pressing Run.
 
 clear; clc; close all;
 
-%% STYLE BLOCK
+%% Style Block
 OUT_DIR   = fullfile('figures', 'output');
 FIG1_NAME = 'fig1_torque_profile_matlab';
 FIG2_NAME = 'fig2_walker_phase_matlab';
