@@ -5,7 +5,7 @@
 
 clear; clc; close all;
 
-%% STYLE BLOCK 
+%% Style format 
 %FIG_TITLE      = 'TOST equivalence of EI and JND-EI optima (JND-informed bounds)';
 OUT_DIR        = fullfile('figures', 'output');
 OUT_NAME       = 'fig9_tost_equivalence_matlab';
