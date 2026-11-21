@@ -1,7 +1,7 @@
 % Md Mainuddin Sagar
 clear; clc; close all;
 
-%% STYLE BLOCK
+%% Style Block
 %FIG_TITLE      = 'JND-informed Bayesian optimization for ankle-exoskeleton tuning';
 OUT_DIR        = fullfile('figures', 'output');
 OUT_NAME       = 'fig10_master_summary_matlab';
@@ -17,7 +17,7 @@ METHOD_COLORS  = containers.Map(METHODS, ...
 
 if ~exist(OUT_DIR,'dir'), mkdir(OUT_DIR); end
 
-% Load data
+% Loading data
 T    = readtable(fullfile('results','tables','sweep_summary_publication.csv'));
 tost = jsondecode(fileread(fullfile('results','logs','tost_summary_publication.json')));
 
@@ -68,7 +68,7 @@ exportgraphics(fig, fullfile(OUT_DIR,[OUT_NAME '_a.eps']), 'ContentType','vector
 exportgraphics(fig, fullfile(OUT_DIR,[OUT_NAME '_a.svg']), 'ContentType','vector');
 exportgraphics(fig, fullfile(OUT_DIR,[OUT_NAME '_a.png']), 'Resolution',1200);
 
-%% (b) TOST
+%% (b) TOST analysis
 fig = figure('Color','w','Position',[100 100 700 500],'Visible','on');
 hold on; box on;
 
