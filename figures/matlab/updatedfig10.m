@@ -2,7 +2,7 @@
 clear; clc; close all;
 
 %% Style Block
-%FIG_TITLE      = 'JND-informed Bayesian optimization for ankle-exoskeleton tuning';
+%Figure title      = 'JND-informed Bayesian optimization for ankle-exoskeleton tuning';
 OUT_DIR        = fullfile('figures', 'output');
 OUT_NAME       = 'fig10_master_summary_matlab';
 METHODS        = {'random','grid','ei','ts','jnd_ei'};
