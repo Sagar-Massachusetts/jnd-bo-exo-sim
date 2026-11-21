@@ -2,13 +2,13 @@
 % fig4_human_oracle.m
 % Left: Bradley-Terry preference probability.
 % Right: JND-aware tie zone on a (peak_timing, peak_torque) slice.
-% Pure MATLAB
+% Pure MATLAB Validation
 %
 % Running process: openning in MATLAB 2026 in my macbook, Current Folder = repo root, press Run.
 
 clear; clc; close all;
 
-%% STYLE BLOCK
+%% Style Block
 OUT_DIR  = fullfile('figures', 'output');
 OUT_NAME = 'fig4_human_oracle_matlab';
 BETAS    = [1.0 5.0 20.0];
