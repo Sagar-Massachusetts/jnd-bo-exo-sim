@@ -3,11 +3,11 @@
 % Simple regret bar chart: all 5 methods x 4 surfaces, mean +/- std over seeds.
 % Reads results/tables/sweep_summary.csv (20-seed).
 %
-% Running in my macbook: openning in MATLAB 2026, Current Folder = repo root, press Run.
+% Running in my macbook: openning in MATLAB 2026, Current Folder = repo root, then pressing Run.
 
 clear; clc; close all;
 
-%% STYLE BLOCK
+%% Style Block
 OUT_DIR       = fullfile('figures', 'output');
 OUT_NAME      = 'fig7b_summary_bars_matlab';
 CSV           = fullfile('results', 'tables', 'sweep_summary_publication.csv');
