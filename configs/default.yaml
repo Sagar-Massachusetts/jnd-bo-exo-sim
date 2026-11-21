@@ -1,19 +1,19 @@
 # Global defaults for jnd-bo-exo-sim
-project:
+project: % projection name
   name: jnd-bo-exo-sim
   seed: 0
 
-walker:
+walker: % walker profile 
   dt: 0.01
   stride_seconds: 1.0
 
-torque_profile:
+torque_profile: % torque profile
   param_names: [rise_time, peak_timing, fall_time, peak_torque]
 
-optimizer:
+optimizer: % optimizer
   budget: 40
   n_initial_random: 6
 
-noise:
+noise: % standard deviation and noises
   reward_std: 0.02
   preference_noise: 0.10
