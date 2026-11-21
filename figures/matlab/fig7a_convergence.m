@@ -9,7 +9,7 @@
 
 clear; clc; close all;
 
-%%  STYLE BLOCK 
+%%  Style Block 
 %FIG_TITLE      = 'Best-so-far reward across acquisition strategies';
 OUT_DIR        = fullfile('figures', 'output');
 OUT_NAME       = 'fig7a_convergence_bands_matlab';
