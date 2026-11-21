@@ -1,14 +1,14 @@
 % Md Mainuddin Sagar
 % fig3_reward_surfaces.m
-% 2x2 panel of the four synthetic reward surfaces, sliced over
+% 2x2 panel of the four simulated reward surfaces, sliced over
 % (peak_timing, peak_torque) with the other two params at their optimum.
-% Pure MATLAB 
+% Pure MATLAB validation
 %
-% Run Process: openning in MATLAB 2026 in my macbook, Current Folder = repo root, press Run.
+% Running Process: openning in MATLAB 2026 in my macbook, Current Folder = repo root, then pressing Run.
 
 clear; clc; close all;
 
-%% STYLE BLOCK
+%% Style Block
 OUT_DIR  = fullfile('figures', 'output');
 OUT_NAME = 'fig3_reward_surfaces_matlab';
 FIG_TITLE = 'Four synthetic reward surfaces (peak\_timing vs peak\_torque)';
